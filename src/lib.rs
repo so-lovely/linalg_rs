@@ -150,6 +150,8 @@ mod tests {
         ]);
         assert_eq!(result, expected);
     }
+    
+    #[test]
     fn test_matrix_vector_multiplication() {
         let matrix_x: Matrix<f64> = Matrix::new(2,2, vec![
             Complex::zero(), Complex::one(),
