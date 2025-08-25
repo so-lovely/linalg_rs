@@ -94,6 +94,18 @@ impl<T: Float> Matrix<T> {
         Matrix::new(new_rows, new_cols, new_elements)
 
     }
+    
+    pub fn rows(&self) -> usize {
+        self.rows
+    }
+
+    pub fn cols(&self) -> usize {
+        self.cols
+    }
+
+    pub fn elements(&self) -> &Vec<Complex<T>> {
+        &self.elements
+    }
 }
 
 impl<T: Float> Mul<Vector<T>> for Matrix<T> {
