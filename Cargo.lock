@@ -28,7 +28,7 @@ dependencies = [
 
 [[package]]
 name = "rain_linalg"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "complex_rs",
  "num-traits",

@@ -11,7 +11,13 @@ impl<T: Float> Vector<T> {
     pub fn new(elements: Vec<Complex<T>>) -> Self {
         Self {elements}
     }
-
+    pub fn elements(&self) -> &Vec<Complex<T>> {
+        &self.elements
+    }
+    
+    pub fn get(&self, index: usize) -> Complex<T> {
+        self.elements[index]
+    }
     pub fn dim(&self) -> usize {
         self.elements.len()
     }
@@ -66,6 +72,28 @@ impl<T: Float> Matrix<T> {
     pub fn get(&self, row: usize, col: usize) -> Complex<T> {
         self.elements[row * self.cols + col]
     }
+
+    pub fn tensor_product(&self, other:&Self) -> Self {
+        let new_rows = self.rows * other.rows;
+        let new_cols = self.cols * other.cols;
+        let mut new_elements = vec![Complex::zero(); new_rows * new_cols];
+        
+        for i in 0..self.rows {
+            for j in 0..self.cols {
+                let self_elem = self.get(i,j);
+                for k in 0..other.rows {
+                    for l in 0..other.cols {
+                        let other_elem = other.get(k,l);
+                        let new_row = i * other.rows + k;
+                        let new_col = j * other.cols + l;
+                        new_elements[new_row * new_cols + new_col] = self_elem * other_elem;
+                    }
+                }
+            }
+        }
+        Matrix::new(new_rows, new_cols, new_elements)
+
+    }
 }
 
 impl<T: Float> Mul<Vector<T>> for Matrix<T> {
@@ -86,11 +114,30 @@ impl<T: Float> Mul<Vector<T>> for Matrix<T> {
 
 }
 
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
+
+    fn test_tensor_product() {
+        let a = Matrix::new(2,2,vec![
+            Complex::new(1.0,0.0), Complex::new(2.0, 0.0),
+            Complex::new(3.0,0.0), Complex::new(4.0, 0.0),
+        ]);
+
+        let b = Matrix::new(1,2, vec![
+            Complex::new(0.0,0.0), Complex::new(5.0,0.0)
+        ]);
+        let result = a.tensor_product(&b);
+        let expected = Matrix::new(2,4, vec![
+            Complex::new(0.0,0.0), Complex::new(5.0,0.0), Complex::new(0.0,0.0), Complex::new(10.0,0.0),
+            Complex::new(0.0,0.0), Complex::new(15.0,0.0), Complex::new(0.0,0.0), Complex::new(20.0,0.0),
+
+        ]);
+        assert_eq!(result, expected);
+    }
     fn test_matrix_vector_multiplication() {
         let matrix_x: Matrix<f64> = Matrix::new(2,2, vec![
             Complex::zero(), Complex::one(),
