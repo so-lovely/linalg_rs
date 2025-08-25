@@ -3,6 +3,7 @@ name = "linalg_rs"
 version = "0.1.0"
 edition = "2024"
 description = "Linear algebra library for Rust"
+license = "MIT"
 
 [dependencies]
 complex_rs = "0.1.0"
