@@ -2,7 +2,7 @@ use complex_rs::Complex;
 use num_traits::Float;
 use std::ops::{Add, Mul};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Vector<T: Float> {
     elements: Vec<Complex<T>>,
 }
@@ -57,7 +57,7 @@ impl<T: Float> Mul<T> for Vector<T> {
 }
 
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Matrix<T: Float> {
     rows: usize,
     cols: usize,
