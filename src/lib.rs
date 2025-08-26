@@ -11,7 +11,7 @@ impl<T: Float> Vector<T> {
     pub fn new(elements: Vec<Complex<T>>) -> Self {
         Self {elements}
     }
-    pub fn elements(&self) -> &Vec<Complex<T>> {
+    pub fn elements(&self) -> &[Complex<T>] {
         &self.elements
     }
     
@@ -103,7 +103,7 @@ impl<T: Float> Matrix<T> {
         self.cols
     }
 
-    pub fn elements(&self) -> &Vec<Complex<T>> {
+    pub fn elements(&self) -> &[Complex<T>] {
         &self.elements
     }
 }
